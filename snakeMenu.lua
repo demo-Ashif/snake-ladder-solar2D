@@ -2,6 +2,8 @@ local storyboard = require( "composer" )
 local scene = storyboard.newScene()
 local widget = require("widget")
 
+local snakeMenuGroup;
+
 
 
 -- local forward references should go here --
@@ -18,9 +20,11 @@ function scene:create( event )
 	local group = self.view
 	print( "Called snake menu" )
 
+	snakeMenuGroup = display.newGroup()
+
 	
 	if animation1 ~= nil then
-		group:insert(animation1)
+		snakeMenuGroup:insert(animation1)
 	end
 	diceshot=nil;--score of player to be saved
 	playerCount = nil;--counting who can shot now
@@ -39,7 +43,7 @@ function scene:create( event )
 	local title= display.newImageRect ("images/optionstitle.png", 297, 99)
 	title.x = centerX
 	title.y  = 30
-	group:insert(title)
+	snakeMenuGroup:insert(title)
 	
 	clouds ={
 	 {getImage = "images/cloud01.png"}, 
@@ -53,7 +57,7 @@ function scene:create( event )
 	local cloud = display.newImage(clouds[imagesId].getImage   )
 	cloud.x = math.random (display.screenOriginX , centerX )
 	cloud.y = math.random (display.screenOriginY + cloud.height, centerY)
-	group:insert(cloud)
+	snakeMenuGroup:insert(cloud)
 	cloud.alpha = 0.7
 	transition.to( cloud, {time = math.random (30000 , 120000), x = withScrn + 300 } )
 
@@ -64,7 +68,7 @@ function scene:create( event )
 	backbtn.x = .6 * backbtn.width 
 	backbtn.destination = "mainMenu" 
 	backbtn:addEventListener("tap", btnTap)
-	group:insert(backbtn) 
+	snakeMenuGroup:insert(backbtn) 
 
 	-- create custom buttom
 	local playBtn1 = widget.newButton
@@ -82,7 +86,7 @@ function scene:create( event )
 	playBtn1.y = title.y + 100
 	playBtn1.destination = "snake1vsaiEXP"
 	playBtn1:addEventListener("tap", btnTap)
-	group:insert(playBtn1)
+	snakeMenuGroup:insert(playBtn1)
 
 	local playBtn2 = widget.newButton
 	{
@@ -99,7 +103,7 @@ function scene:create( event )
 	playBtn2.y = playBtn1.y + 60
 	playBtn2.destination = "snake2playerEXP"
 	playBtn2:addEventListener("tap", btnTap)
-	group:insert(playBtn2)
+	snakeMenuGroup:insert(playBtn2)
 
 	local playBtn3 = widget.newButton
 	{
@@ -116,7 +120,7 @@ function scene:create( event )
 	playBtn3.y = playBtn2.y + 60
 	playBtn3.destination = "snake3playerEXP"
 	playBtn3:addEventListener("tap", btnTap)
-	group:insert(playBtn3)
+	snakeMenuGroup:insert(playBtn3)
 
 	local playBtn4 = widget.newButton
 	{
@@ -133,7 +137,7 @@ function scene:create( event )
 	playBtn4.y = playBtn3.y + 60
 	playBtn4.destination = "snake4playerEXP"
 	playBtn4:addEventListener("tap", btnTap)
-	group:insert(playBtn4)
+	snakeMenuGroup:insert(playBtn4)
 
 	local playBtn5 = widget.newButton
 	{
@@ -150,7 +154,7 @@ function scene:create( event )
 	playBtn5.y = playBtn4.y + 60
 	playBtn5.destination = "snakeRules"
 	playBtn5:addEventListener("tap", btnTap)
-	group:insert(playBtn5)
+	snakeMenuGroup:insert(playBtn5)
 	
 end
 

@@ -2,6 +2,10 @@ local storyboard = require( "composer" )
 local scene = storyboard.newScene()
 local widget = require("widget")
 
+local title
+
+local menuGroup;
+
 
 local function btnTap1(event)
 	os.exit()
@@ -11,17 +15,17 @@ end
 function scene:create( event )
 
 	local group = self.view
-	print( "Scene created" )
+	menuGroup = display.newGroup()
 
 	-- local image = display.newImageRect( "images/gameTitle.png", 250, 160 )
 	-- image.x = display.contentCenterX
 	-- image.y = display.contentCenterY
 	-- group:insert(image)
 	
-	local title = display.newImageRect( "images/gameTitle.png", 250 , 160 )
+	title = display.newImageRect( "images/gameTitle.png", 250 , 160 )
 	title.x = centerX
 	title.y  = 80
-	-- group:insert(title)
+	menuGroup:insert(title)
 
 	clouds ={
 	 {getImage = "images/cloud01.png"}, 
@@ -35,7 +39,7 @@ function scene:create( event )
 	local cloud = display.newImage(clouds[imagesId].getImage   )
 	cloud.x = math.random (display.screenOriginX , centerX )
 	cloud.y = math.random (display.screenOriginY + cloud.height, centerY)
-	-- group:insert(cloud)
+	menuGroup:insert(cloud)
 	cloud.alpha = 0.7
 	transition.to( cloud, {time = math.random (30000 , 120000), x = withScrn + 300 } )
 
@@ -62,7 +66,7 @@ function scene:create( event )
 	-- animation.x = display.contentWidth / 2
 	-- animation.y = optionsBtn.y + 130
     -- animation:play()
-    -- group:insert(animation)
+    -- menuGroup:insert(animation)
 
     reloadbtn = display.newImageRect ("images/quit.png", 112, 117)
 	reloadbtn.x = display.contentWidth-40
@@ -71,7 +75,7 @@ function scene:create( event )
 	reloadbtn.height =50
 	reloadbtn.destination = "ludoai" 
 	reloadbtn:addEventListener("touch", btnTap1)
-	-- group:insert(reloadbtn)
+	menuGroup:insert(reloadbtn)
 end
 
 local function onKeyEvent( event )
@@ -142,6 +146,7 @@ function scene:hide( event )
     local phase = event.phase
  
     if ( phase == "will" ) then
+		-- display.remove( menuGroup )
         -- Code here runs when the scene is on screen (but is about to go off screen)
  
     elseif ( phase == "did" ) then
