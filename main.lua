@@ -1,31 +1,42 @@
--- Include the Composer library
+-- Hide status bar
+display.setStatusBar( display.HiddenStatusBar )
+
+-- load composer scene management library
 local composer = require( "composer" )
 
--- Removes status bar on iOS
--- https://docs.coronalabs.com/api/library/display/setStatusBar.html
-display.setStatusBar( display.HiddenStatusBar ) 
+-- local bg_adjustment = 1
 
--- -- Removes bottom bar on Android 
--- if system.getInfo( "androidApiLevel" ) and system.getInfo( "androidApiLevel" ) < 19 then
--- 	native.setProperty( "androidSystemUiVisibility", "lowProfile" )
--- else
--- 	native.setProperty( "androidSystemUiVisibility", "immersiveSticky" ) 
--- end
+-- local bgimage = display.newImage("images/openingBG.jpg")
+-- bgimage.xScale = (bg_adjustment  * bgimage.contentHeight)/bgimage.contentHeight
+-- bgimage.yScale = bgimage.xScale
+-- centerX = display.contentWidth / 2
+-- centerY = display.contentHeight / 2
+-- bgimage.x = centerX
+-- bgimage.y = centerY
 
-local bg_adjustment = 1
+-- withScrn = display.contentWidth
+-- heightScrn = display.contentHeight
+-- topScrn = display.screenOriginY
+-- leftScrn = display.screenOriginX
 
-local bgimage = display.newImage("images/openingBG.jpg")
-bgimage.xScale = (bg_adjustment  * bgimage.contentHeight)/bgimage.contentHeight
-bgimage.yScale = bgimage.xScale
-centerX = display.contentWidth / 2
-centerY = display.contentHeight / 2
-bgimage.x = centerX
-bgimage.y = centerY
+-- system events
+local function onSystemEvent( event )
+        
+    local eventType = event.type
+    
+    if ( eventType == "applicationStart" ) then
+        -- Occurs when the application is launched and all code in "main.lua" is executed
+    elseif ( eventType == "applicationExit" ) then
+        -- Occurs when the user or OS task manager quits the application
+    elseif ( eventType == "applicationSuspend" ) then
+        -- Perform all necessary actions for when the device suspends the application, i.e. during a phone call
+    elseif ( eventType == "applicationResume" ) then
+        -- Perform all necessary actions for when the app resumes from a suspended state
+    end
+end
+Runtime:addEventListener( "system", onSystemEvent )
 
-withScrn = display.contentWidth
-heightScrn = display.contentHeight
-topScrn = display.screenOriginY
-leftScrn = display.screenOriginX
+-- recycle on scene change
+composer.recycleOnSceneChange = true
 
-
-composer.gotoScene( "mainMenu", { effect = "fade"} )
+composer.gotoScene( "mainMenu")
